@@ -1,4 +1,4 @@
-package com.tcoded.lightlibs;
+package com.tcoded.lightlibs.evictingstack;
 
 import java.util.Iterator;
 
