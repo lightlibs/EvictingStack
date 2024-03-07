@@ -52,6 +52,15 @@ public class EvictingStack<T> implements Iterable<T> {
         return new StackIterator(stack.length, next);
     }
 
+    public boolean contains(T item) {
+        for (T t : this) {
+            if (t.equals(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private class StackIterator implements Iterator<T> {
 
         private final int end;
