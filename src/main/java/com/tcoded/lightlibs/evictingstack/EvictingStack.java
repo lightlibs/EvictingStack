@@ -16,6 +16,10 @@ public class EvictingStack<T> implements Iterable<T> {
     }
 
     public void push(T item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
+
         if (next == bottom) {
             bottom = (bottom + 1) % stack.length;
         }
@@ -53,8 +57,12 @@ public class EvictingStack<T> implements Iterable<T> {
     }
 
     public boolean contains(T item) {
+        if (item == null) {
+            throw new IllegalArgumentException("Item cannot be null");
+        }
+
         for (T t : this) {
-            if (t.equals(item)) {
+            if (item.equals(t)) {
                 return true;
             }
         }
@@ -63,19 +71,19 @@ public class EvictingStack<T> implements Iterable<T> {
 
     private class StackIterator implements Iterator<T> {
 
-        private final int end;
+        private final int endExclusive;
         private final int size;
         private int index;
 
-        public StackIterator(int size, int endIndex) {
-            this.end = endIndex;
+        public StackIterator(int size, int endIndexExclusive) {
             this.size = size;
-            this.index = (endIndex - 1) % this.size;
+            this.endExclusive = endIndexExclusive;
+            this.index = Math.floorMod(endIndexExclusive - 1, this.size);
         }
 
         @Override
         public boolean hasNext() {
-            return index != end;
+            return index != endExclusive;
         }
 
         @Override
@@ -85,7 +93,7 @@ public class EvictingStack<T> implements Iterable<T> {
             }
 
             T item = stack[index];
-            index = (index - 1) % size;
+            index = Math.floorMod(index - 1, size);
             return item;
         }
     }

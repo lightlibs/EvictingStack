@@ -42,3 +42,6 @@ bin/
 .DS_Store
 
 /.idea
+/out
+/META-INF
+/src/test/java/com/
